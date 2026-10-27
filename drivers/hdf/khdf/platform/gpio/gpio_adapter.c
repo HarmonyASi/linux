@@ -102,7 +102,7 @@ static int32_t LinuxGpioGetDir(struct GpioCntlr *cntlr, uint16_t local, uint16_t
     if (dirGet < 0) {
         return HDF_ERR_BSP_PLT_API_ERR;
     }
-    *dir = (dirGet == GPIOF_DIR_IN) ? GPIO_DIR_IN : GPIO_DIR_OUT;
+    *dir = (dirGet == GPIO_LINE_DIRECTION_IN) ? GPIO_DIR_IN : GPIO_DIR_OUT;
     return HDF_SUCCESS;
 }
 
@@ -237,7 +237,7 @@ static int32_t LinuxGpioBind(struct HdfDeviceObject *device)
     return HDF_SUCCESS;
 }
 
-static int LinuxGpioMatchProbe(struct gpio_chip *chip, void *data)
+static int LinuxGpioMatchProbe(struct gpio_chip *chip, const void *data)
 {
     int32_t ret;
     struct GpioCntlr *cntlr = NULL;
@@ -282,12 +282,15 @@ static int32_t LinuxGpioInit(struct HdfDeviceObject *device)
         return HDF_ERR_INVALID_OBJECT;
     }
 
-    (void)gpiochip_find(device, LinuxGpioMatchProbe);
+    struct gpio_device *gdev = gpio_device_find(device, LinuxGpioMatchProbe);
+    if (gdev)
+    	gpio_device_put(gdev);
+
     HDF_LOGI("LinuxGpioInit: dev service:%s init done!", HdfDeviceGetServiceName(device));
     return HDF_SUCCESS;
 }
 
-static int LinuxGpioMatchRelease(struct gpio_chip *chip, void *data)
+static int LinuxGpioMatchRelease(struct gpio_chip *chip, const void *data)
 {
     struct GpioCntlr *cntlr = NULL;
 
@@ -323,7 +326,9 @@ static void LinuxGpioRelease(struct HdfDeviceObject *device)
         return;
     }
 
-    (void)gpiochip_find(device, LinuxGpioMatchRelease);
+    struct gpio_device *gdev = gpio_device_find(device, LinuxGpioMatchRelease);
+    if (gdev)
+    	gpio_device_put(gdev);
 }
 
 struct HdfDriverEntry g_gpioLinuxDriverEntry = {
