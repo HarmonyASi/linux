@@ -2,6 +2,21 @@
 #
 # Makefile for the HID driver
 #
+
+HDF_ROOT_DIR = -I$(srctree)/drivers/hdf
+ccflags-$(CONFIG_DRIVERS_HDF_INPUT) += $(HDF_ROOT_DIR)/framework/model/input/driver \
+        $(HDF_ROOT_DIR)/framework/include/core \
+        $(HDF_ROOT_DIR)/framework/core/common/include/host \
+        $(HDF_ROOT_DIR)/framework/include/utils \
+        $(HDF_ROOT_DIR)/framework/include/osal \
+        $(HDF_ROOT_DIR)/framework/ability/sbuf/include \
+        $(HDF_ROOT_DIR)/inner_api/utils \
+        $(HDF_ROOT_DIR)/inner_api/osal/shared \
+        $(HDF_ROOT_DIR)/inner_api/core \
+        $(HDF_ROOT_DIR)/inner_api/host/shared \
+        $(HDF_ROOT_DIR)/khdf/osal/include \
+        $(HDF_ROOT_DIR)/evdev
+
 hid-y			:= hid-core.o hid-input.o hid-quirks.o
 hid-$(CONFIG_DEBUG_FS)		+= hid-debug.o
 hid-$(CONFIG_HID_HAPTIC)	+= hid-haptic.o

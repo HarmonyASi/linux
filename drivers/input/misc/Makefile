@@ -97,3 +97,22 @@ obj-$(CONFIG_INPUT_WM831X_ON)		+= wm831x-on.o
 obj-$(CONFIG_INPUT_XEN_KBDDEV_FRONTEND)	+= xen-kbdfront.o
 obj-$(CONFIG_INPUT_YEALINK)		+= yealink.o
 obj-$(CONFIG_INPUT_IDEAPAD_SLIDEBAR)	+= ideapad_slidebar.o
+
+ccflags-y +=-I$(srctree)/drivers/hdf/framework/model/input/driver \
+             -I$(srctree)/drivers/hdf/framework/model/input/driver/input_bus_ops \
+             -I$(srctree)/drivers/hdf/framework/include/core \
+             -I$(srctree)/drivers/hdf/framework/core/common/include/host \
+             -I$(srctree)/drivers/hdf/framework/include/utils \
+             -I$(srctree)/drivers/hdf/framework/include/osal \
+             -I$(srctree)/drivers/hdf/framework/include/platform \
+             -I$(srctree)/drivers/hdf/framework/include/config \
+             -I$(srctree)/drivers/hdf/framework/core/host/include \
+             -I$(srctree)/drivers/hdf/framework/core/shared/include \
+             -I$(srctree)/drivers/hdf/framework/utils/include \
+             -I$(srctree)/drivers/hdf/inner_api/osal/shared \
+             -I$(srctree)/drivers/hdf/inner_api/host/shared \
+             -I$(srctree)/drivers/hdf/inner_api/utils \
+             -I$(srctree)/drivers/hdf/inner_api/core \
+             -I$(srctree)/drivers/hdf/khdf/osal/include
+ccflags-y +=-I$(srctree)/bounds_checking_function/include \
+             -I$(srctree)/drivers/hdf/evdev

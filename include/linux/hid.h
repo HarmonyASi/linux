@@ -754,6 +754,7 @@ struct hid_device {
 #ifdef CONFIG_HID_BPF
 	struct hid_bpf bpf;						/* hid-bpf data */
 #endif /* CONFIG_HID_BPF */
+	void *input_dev;
 };
 
 void hiddev_free(struct kref *ref);

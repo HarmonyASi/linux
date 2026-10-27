@@ -2094,8 +2094,11 @@ static inline int usb_translate_errors(int error_code)
 #define USB_DEVICE_REMOVE	0x0002
 #define USB_BUS_ADD		0x0003
 #define USB_BUS_REMOVE		0x0004
+#define USB_GADGET_ADD		0x0005
+#define USB_GADGET_REMOVE	0x0006
 extern void usb_register_notify(struct notifier_block *nb);
 extern void usb_unregister_notify(struct notifier_block *nb);
+extern void usb_notify_online_status(bool online);
 
 /* debugfs stuff */
 extern struct dentry *usb_debug_root;

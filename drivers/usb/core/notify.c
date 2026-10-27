@@ -66,3 +66,12 @@ void usb_notify_remove_bus(struct usb_bus *ubus)
 {
 	blocking_notifier_call_chain(&usb_notifier_list, USB_BUS_REMOVE, ubus);
 }
+
+void usb_notify_online_status(bool online)
+{
+	if (online) {
+		blocking_notifier_call_chain(&usb_notifier_list, USB_GADGET_ADD, NULL);
+	} else {
+		blocking_notifier_call_chain(&usb_notifier_list, USB_GADGET_REMOVE, NULL);
+	}
+}
