@@ -119,7 +119,7 @@ static int RegisterDev(struct OsalCdev* cdev, const char* devName)
         return ret;
     }
 
-    devMinor = ida_simple_get(&hdf_vnode_ids, HDF_MINOR_START, HDF_MAX_CHAR_DEVICES, GFP_KERNEL);
+    devMinor = ida_alloc_range(&hdf_vnode_ids, HDF_MINOR_START, HDF_MAX_CHAR_DEVICES - 1, GFP_KERNEL);
     if (devMinor < 0) {
         HDF_LOGE("failed to get hdf dev minor");
         return HDF_DEV_ERR_NO_DEVICE;
@@ -136,7 +136,7 @@ static int RegisterDev(struct OsalCdev* cdev, const char* devName)
 
     ret = cdev_add(&cdev->cdev, cdev->dev.devt, 1);
     if (ret) {
-        ida_simple_remove(&hdf_vnode_ids, devMinor);
+        ida_free(&hdf_vnode_ids, devMinor);
         HDF_LOGE("failed to add hdf cdev(%s)\n", devName);
         return ret;
     }
@@ -145,7 +145,7 @@ static int RegisterDev(struct OsalCdev* cdev, const char* devName)
     if (ret) {
         HDF_LOGE("device(%s) add failed\n", devName);
         cdev_del(&cdev->cdev);
-        ida_simple_remove(&hdf_vnode_ids, devMinor);
+        ida_free(&hdf_vnode_ids, devMinor);
         return ret;
     }
 
@@ -247,7 +247,7 @@ void OsalUnregisterCdev(struct OsalCdev* cdev)
     }
     device_del(&cdev->dev);
     cdev_del(&cdev->cdev);
-    ida_simple_remove(&hdf_vnode_ids, MINOR(cdev->dev.devt));
+    ida_free(&hdf_vnode_ids, MINOR(cdev->dev.devt));
 }
 
 void OsalFreeCdev(struct OsalCdev* cdev)
