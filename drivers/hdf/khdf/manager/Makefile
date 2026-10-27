@@ -93,4 +93,5 @@ ccflags-y += \
        -I$(srctree)/drivers/hdf/inner_api/core \
        -I$(srctree)/drivers/hdf/khdf/osal/include \
        -I$(srctree)/include/uapi/linux \
-       -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include
+       -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include \
+       -mno-outline-atomics
