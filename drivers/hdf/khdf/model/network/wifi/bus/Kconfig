@@ -16,10 +16,6 @@ config DRIVERS_HDF_WIFI_BUS
       Answer Y to enable HDF WiFi Bus Host driver.
 
 if DRIVERS_HDF_WIFI_BUS
-choice
-  prompt "Select wlan sdio or usb source"
-  default DRIVERS_HDF_WLAN_SDIO
-
   config DRIVERS_HDF_WLAN_SDIO
     bool "Enable HDF wlan sdio bus"
     default n
@@ -33,5 +29,4 @@ choice
     depends on DRIVERS_HDF_USB_PNP_NOTIFY
     help
       Answer Y to support HDF wlan usb bus.
-endchoice
 endif
