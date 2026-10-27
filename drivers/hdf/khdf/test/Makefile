@@ -9,7 +9,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 include drivers/hdf/khdf/test/test_khdf.mk
-HDF_FRAMWORK_TEST_ROOT = ../../../../framework/test/unittest
+HDF_FRAMWORK_TEST_ROOT = ../../framework/test/unittest
 
 obj-y  += $(HDF_FRAMWORK_TEST_ROOT)/common/hdf_main_test.o \
           $(HDF_FRAMWORK_TEST_ROOT)/osal/osal_test_entry.o \
@@ -129,7 +129,7 @@ ccflags-y += -I$(srctree)/drivers/hdf/framework/include \
              -I$(srctree)/drivers/hdf/inner_api/utils \
              -I$(srctree)/drivers/hdf/inner_api/core \
              -I$(srctree)/drivers/hdf/inner_api/host/shared \
-             -I$(srctree)/bounds_checking_function/include \
+             -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include \
              -I$(srctree)/drivers/hdf/framework/test/unittest/config \
              -I$(srctree)/drivers/hdf/framework/test/unittest/utils/hcs_parser/unittest \
              -I$(srctree)/drivers/hdf/framework/include/config \

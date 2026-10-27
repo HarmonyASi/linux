@@ -12,7 +12,7 @@
 #
 #
 KHDF_DISPLAY_BASE_ROOT_DIR = ../../../../../../..
-DISPLAY_ROOT_DIR = ../../../../../framework/model/display/driver
+DISPLAY_ROOT_DIR = ../../../framework/model/display/driver
 
 ifeq ($(CONFIG_DRIVERS_HDF_DISP), y)
 obj-y += \
@@ -64,6 +64,6 @@ ccflags-y += -lm -lc -lgcc \
             -I$(srctree)/drivers/hdf/khdf/osal/include \
             -I$(srctree)/include/linux \
             -I$(srctree)/include/drm
-ccflags-y +=-I$(srctree)/bounds_checking_function/include
+ccflags-y +=-I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include
 
 endif

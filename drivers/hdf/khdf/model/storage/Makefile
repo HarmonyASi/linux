@@ -11,7 +11,7 @@
 
 include drivers/hdf/khdf/platform/platform.mk
 
-STORAGE_ROOT_DIR = ../../../../../framework/model/storage
+STORAGE_ROOT_DIR = ../../../framework/model/storage
 
 ccflags-y +=-I$(srctree)/drivers/hdf/framework/model/storage/include/mmc \
             -I$(srctree)/drivers/hdf/framework/model/storage/include/mtd \
@@ -29,7 +29,7 @@ ccflags-y +=-I$(srctree)/drivers/hdf/framework/model/storage/include/mmc \
             -I$(srctree)/drivers/hdf/inner_api/core \
             -I$(srctree)/drivers/hdf/inner_api/host/shared \
             -I$(srctree)/drivers/hdf/khdf/osal/include \
-            -I$(srctree)/bounds_checking_function/include
+            -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include
 
 obj-$(CONFIG_DRIVERS_HDF_STORAGE) += \
              ./mmc_block_linux.o \

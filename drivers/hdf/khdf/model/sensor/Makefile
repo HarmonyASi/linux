@@ -9,7 +9,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 
-SENSOR_ROOT_DIR = ../../../../../../hdf_core/framework/model/sensor/driver
+SENSOR_ROOT_DIR = ../../../framework/model/sensor/driver
 SENSOR_ROOT_CHIPSET = ../../../../../../peripheral/sensor
 
 obj-$(CONFIG_DRIVERS_HDF_SENSOR) += \
@@ -121,4 +121,4 @@ ccflags-y += -I$(srctree)/drivers/hdf/framework/model/sensor/driver/include \
              -I$(srctree)/drivers/hdf/inner_api/core \
              -I$(srctree)/drivers/hdf/inner_api/host/shared \
              -I$(srctree)/drivers/hdf/khdf/osal/include \
-             -I$(srctree)/bounds_checking_function/include
+             -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include

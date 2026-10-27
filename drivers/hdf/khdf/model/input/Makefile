@@ -12,7 +12,7 @@
 #
 #
 
-INPUT_ROOT_DIR = ../../../../../framework/model/input/driver
+INPUT_ROOT_DIR = ../../../framework/model/input/driver
 
 obj-$(CONFIG_DRIVERS_HDF_INPUT) += \
                $(INPUT_ROOT_DIR)/input_bus_ops/input_i2c_ops.o \
@@ -50,5 +50,5 @@ ccflags-y +=-I$(srctree)/drivers/hdf/framework/model/input/driver \
             -I$(srctree)/drivers/hdf/inner_api/core \
             -I$(srctree)/drivers/hdf/inner_api/host/shared \
             -I$(srctree)/drivers/hdf/khdf/osal/include
-ccflags-y +=-I$(srctree)/bounds_checking_function/include \
+ccflags-y +=-I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include \
             -I$(srctree)/drivers/hdf/evdev

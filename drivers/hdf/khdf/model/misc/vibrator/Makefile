@@ -12,7 +12,7 @@
 #
 #
 
-VIBRATOR_ROOT_DIR = ../../../../../../../hdf_core/framework/model/misc/vibrator/driver
+VIBRATOR_ROOT_DIR = ../../../../framework/model/misc/vibrator/driver
 VIBRATOR_ROOT_CHIPSET = ../../../../../../../peripheral/vibrator
 
 obj-$(CONFIG_DRIVERS_HDF_VIBRATOR) += \
@@ -42,4 +42,4 @@ ccflags-y +=-I$(srctree)/drivers/hdf/framework/model/misc/vibrator/driver/includ
             -I$(srctree)/drivers/hdf/inner_api/core \
             -I$(srctree)/drivers/hdf/inner_api/host/shared \
             -I$(srctree)/drivers/hdf/khdf/osal/include \
-            -I$(srctree)/bounds_checking_function/include
+            -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include

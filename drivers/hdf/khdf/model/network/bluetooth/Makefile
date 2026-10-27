@@ -15,7 +15,7 @@ MODULE_NAME := hdf_bt_model
 
 include drivers/hdf/khdf/model/network/bluetooth/env_config.mk
 
-HDF_BT_FRAMEWORKS_ROOT := ../../../../../../framework/model/network/bluetooth
+HDF_BT_FRAMEWORKS_ROOT := ../../../../framework/model/network/bluetooth
 
 obj-$(CONFIG_DRIVERS_HDF_BT) += $(MODULE_NAME).o
 $(MODULE_NAME)-objs := $(HDF_BT_FRAMEWORKS_ROOT)/hdf_bt_core.o \

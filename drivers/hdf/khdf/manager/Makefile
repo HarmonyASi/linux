@@ -13,12 +13,12 @@
 #
 
 OHOS_SOURCE_ROOT := ../../../../../../
-HDF_FRAMEWORK_SRC_DIR := ../../../../
+HDF_FRAMEWORK_SRC_DIR := ../../
 
 SEC_LIB_SOURCES = memcpy_s.c memmove_s.c memset_s.c securecutil.c secureinput_a.c secureprintoutput_a.c snprintf_s.c \
                   sprintf_s.c strcat_s.c strcpy_s.c strncat_s.c strncpy_s.c strtok_s.c  vsnprintf_s.c vsprintf_s.c
 SEC_FUNCTION_OBJECTS := $(patsubst %.c,%.o,$(SEC_LIB_SOURCES))
-SEC_FUNCTION_OBJECTS := $(addprefix $(OHOS_SOURCE_ROOT)/third_party/bounds_checking_function/src/,${SEC_FUNCTION_OBJECTS})
+SEC_FUNCTION_OBJECTS := $(addprefix ../../third_party_bounds_checking_function/src/,${SEC_FUNCTION_OBJECTS})
 
 obj-y += \
         $(HDF_FRAMEWORK_SRC_DIR)/framework/utils/src/hdf_cstring.o \
@@ -93,4 +93,4 @@ ccflags-y += \
        -I$(srctree)/drivers/hdf/inner_api/core \
        -I$(srctree)/drivers/hdf/khdf/osal/include \
        -I$(srctree)/include/uapi/linux \
-       -I$(srctree)/bounds_checking_function/include
+       -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include

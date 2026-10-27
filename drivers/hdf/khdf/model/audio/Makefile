@@ -15,7 +15,7 @@
 KHDF_AUDIO_BASE_ROOT_DIR = ../../../../../../..
 KHDF_AUDIO_KHDF_ROOT_DIR = drivers/hdf/khdf
 KHDF_FRAMEWORK_ROOT_DIR = drivers/hdf/framework
-KHDF_AUDIO_ROOT_DIR = ../../../../../framework/model/audio
+KHDF_AUDIO_ROOT_DIR = ../../../framework/model/audio
 KHDF_AUDIO_IMX8MM_DIR = $(KHDF_AUDIO_BASE_ROOT_DIR)/device/board/osware/$(DEVICE_NAME)/drivers/audio
 KHDF_AUDIO_IMX8MM_INC_DIR = drivers/hdf/framework/../../../device/board/osware/$(DEVICE_NAME)/drivers/audio
 KHDF_AUDIO_A311D_DIR = $(KHDF_AUDIO_BASE_ROOT_DIR)/device/board/unionman/$(DEVICE_NAME)/kernel/hdf/audio
@@ -128,7 +128,7 @@ ccflags-$(CONFIG_DRIVERS_HDF_AUDIO) += -lm -lc -lgcc -std=gnu99 -Werror\
              -I$(srctree)/$(KHDF_FRAMEWORK_ROOT_DIR)/model/audio/common/include \
              -I$(srctree)/$(KHDF_FRAMEWORK_ROOT_DIR)/model/audio/hdmi/include \
              -I$(srctree)/$(KHDF_FRAMEWORK_ROOT_DIR)/model/audio/usb/include \
-             -I$(srctree)/bounds_checking_function/include
+             -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include
 
 ccflags-$(CONFIG_DRIVERS_HDF_AUDIO_A311D) += \
              -I$(srctree)/$(KHDF_AUDIO_A311D_INC_DIR)/linux_drv/include
