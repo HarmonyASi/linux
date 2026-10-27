@@ -22,5 +22,5 @@
 
 bool PlatInIrqContext(void)
 {
-    return (in_irq() || in_nmi() || in_serving_softirq());
+    return in_interrupt();
 }
