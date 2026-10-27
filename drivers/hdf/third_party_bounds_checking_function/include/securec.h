@@ -24,7 +24,11 @@
 #endif
 
 #if SECUREC_HAVE_STDARG_H
+#if defined(SECUREC_IN_KERNEL) && SECUREC_IN_KERNEL
+#include <linux/stdarg.h>
+#else
 #include <stdarg.h>
+#endif
 #endif
 
 #ifndef SECUREC_HAVE_ERRNO_H
