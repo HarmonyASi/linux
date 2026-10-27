@@ -244,6 +244,7 @@ static int32_t KeventPmNotifierFn(struct notifier_block *nb, unsigned long actio
     return KernalSpacePmNotify(powerEvent);
 }
 
+#ifdef CONFIG_FB
 static int32_t KeventFbNotifierFn(struct notifier_block *nb, unsigned long event, void *data)
 {
     int *blank = NULL;
@@ -281,6 +282,7 @@ static int32_t KeventFbNotifierFn(struct notifier_block *nb, unsigned long event
 
     return KernalSpacePmNotify(powerEvent);
 }
+#endif /* CONFIG_FB */
 
 void CompleteKevent(struct HdfKeventModule *keventModule, struct HdfSBuf *tokenBuffer)
 {
@@ -380,7 +382,9 @@ static void HdfKeventDriverRelease(struct HdfDeviceObject *object)
     }
 
     unregister_pm_notifier(&keventModule->keventPmNotifier);
+#ifdef CONFIG_FB
     fb_unregister_client(&keventModule->fbNotifier);
+#endif
     OsalMutexDestroy(&keventModule->mutex);
     OsalMutexDestroy(&keventModule->clientMutex);
     OsalMemFree(keventModule);
@@ -437,6 +441,7 @@ static int32_t HdfKeventDriverInit(struct HdfDeviceObject *dev)
         HDF_LOGI("%s:register pm notifier success", __func__);
     }
 
+#ifdef CONFIG_FB
     keventModule->fbNotifier.notifier_call = KeventFbNotifierFn;
     ret = fb_register_client(&keventModule->fbNotifier);
     if (ret != 0) {
@@ -445,6 +450,7 @@ static int32_t HdfKeventDriverInit(struct HdfDeviceObject *dev)
     } else {
         HDF_LOGI("%s:register fb notifier success", __func__);
     }
+#endif
 
     g_keventModule = keventModule;
     return ret;
