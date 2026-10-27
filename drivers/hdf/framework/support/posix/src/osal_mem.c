@@ -1,0 +1,97 @@
+/*
+ * Copyright (c) 2020-2021 Huawei Device Co., Ltd.
+ *
+ * HDF is dual licensed: you can use it either under the terms of
+ * the GPL, or the BSD license, at your option.
+ * See the LICENSE file in the root of this repository for complete details.
+ */
+
+#include "osal_mem.h"
+#include <stdlib.h>
+#include "securec.h"
+#include "hdf_core_log.h"
+
+#define HDF_LOG_TAG osal_mem
+
+void *OsalMemAlloc(size_t size)
+{
+    void *buf = NULL;
+
+    if (size == 0) {
+// LCOV_EXCL_START
+        HDF_LOGE("%s invalid param", __func__);
+        return NULL;
+// LCOV_EXCL_STOP
+    }
+    if (size > SIZE_MAX) {
+// LCOV_EXCL_START
+        HDF_LOGE("%s invalid param : size", __func__);
+        return NULL;
+// LCOV_EXCL_STOP
+    }
+
+    buf = malloc(size);
+    if (buf == NULL) {
+        HDF_LOGE("%s malloc failed, size=%zu", __func__, size);
+        return NULL;
+    }
+
+    return buf;
+}
+
+void *OsalMemCalloc(size_t size)
+{
+    void *buf = NULL;
+
+    if (size == 0) {
+// LCOV_EXCL_START
+        HDF_LOGE("%s invalid param", __func__);
+        return NULL;
+// LCOV_EXCL_STOP
+    }
+    if (size > SIZE_MAX) {
+// LCOV_EXCL_START
+        HDF_LOGE("%s invalid param : size", __func__);
+        return NULL;
+// LCOV_EXCL_STOP
+    }
+
+    buf = OsalMemAlloc(size);
+    if (buf != NULL) {
+        (void)memset_s(buf, size, 0, size);
+    }
+
+    return buf;
+}
+// LCOV_EXCL_START
+void *OsalMemAllocAlign(size_t alignment, size_t size)
+{
+    void *buf = NULL;
+    int ret;
+
+    if (size == 0) {
+        HDF_LOGE("%s invalid param", __func__);
+        return NULL;
+    }
+
+    if (alignment == 0 || (alignment & (alignment - 1)) != 0) {
+        HDF_LOGE("%s invalid alignment %zu", __func__, alignment);
+        return NULL;
+    }
+
+    ret = posix_memalign(&buf, alignment, size);
+    if (ret != 0) {
+        HDF_LOGE("%s memory alloc fail %d", __func__, ret);
+        buf = NULL;
+    }
+
+    return buf;
+}
+// LCOV_EXCL_STOP
+void OsalMemFree(void *mem)
+{
+    if (mem != NULL) {
+        free(mem);
+    }
+}
+
