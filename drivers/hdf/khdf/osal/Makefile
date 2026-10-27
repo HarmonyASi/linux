@@ -13,3 +13,4 @@
 #
 
 obj-y  += src/
+ccflags-y += -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include
