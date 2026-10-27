@@ -54,7 +54,7 @@ static void osal_timer_callback(struct timer_list *arg)
 		return;
 	}
 
-	ktimer = from_timer(ktimer, arg, timer);
+	ktimer = timer_container_of(ktimer, arg, timer);
 
 	OsalMutexTimedLock(&ktimer->mutex, HDF_WAIT_FOREVER);
 	mode = ktimer->mode;
@@ -71,7 +71,7 @@ static void osal_timer_callback(struct timer_list *arg)
 			mod_timer(&ktimer->timer, ktimer->timer.expires);
 		}
 	} else {
-		del_timer(&ktimer->timer);
+		timer_delete(&ktimer->timer);
 		OsalMutexDestroy(&ktimer->mutex);
 		OsalMemFree(ktimer);
 		HDF_LOGI("%s timer is stop", __func__);
