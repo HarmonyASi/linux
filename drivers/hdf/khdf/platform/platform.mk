@@ -12,7 +12,7 @@
 #
 #
 
-HDF_PLATFORM_FRAMEWORKS_ROOT = ../../../../../framework/support/platform
+HDF_PLATFORM_FRAMEWORKS_ROOT = ../../../framework/support/platform
 ccflags-$(CONFIG_DRIVERS_HDF_PLATFORM) +=-I$(srctree)/drivers/hdf/framework/include/platform \
    -I$(srctree)/drivers/hdf/framework/support/platform/include \
    -I$(srctree)/drivers/hdf/framework/support/platform/include/fwk \
@@ -52,5 +52,5 @@ ccflags-$(CONFIG_DRIVERS_HDF_PLATFORM) +=-I$(srctree)/drivers/hdf/framework/incl
    -I$(srctree)/drivers/hdf/inner_api/utils \
    -I$(srctree)/drivers/hdf/inner_api/core \
    -I$(srctree)/drivers/hdf/inner_api/host/shared \
-   -I$(srctree)/bounds_checking_function/include \
+   -I$(srctree)/drivers/hdf/third_party_bounds_checking_function/include \
    -I$(srctree)/include/linux
