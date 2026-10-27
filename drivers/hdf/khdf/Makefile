@@ -17,27 +17,33 @@ obj-$(CONFIG_DRIVERS_HDF) += osal/
 obj-$(CONFIG_DRIVERS_HDF) += utils/
 
 $(warning PRODUCT_PATH=$(PRODUCT_PATH))
-ifeq ($(PRODUCT_PATH),)
-$(error PRODUCT_PATH is not set)
-endif
 
-HCS_DIR := ../../../../../$(PRODUCT_PATH)/hdf_config/khdf
-ifeq ($(wildcard $(CURRENT_DIR)/$(HCS_DIR)),)
-HCS_DIR := ../../../../../$(PRODUCT_PATH)/hdf_config
+# For OpenHarmony, PRODUCT_PATH points at the product tree and hdf_config
+# is compiled in as device-specific config. However, on a standalone
+# kernel build there is no product tree, so skip HCS config compile
+# and warn instead of spitting out errors.
+ifneq ($(PRODUCT_PATH),)
+    HCS_DIR := ../../../../../$(PRODUCT_PATH)/hdf_config/khdf
+    ifeq ($(wildcard $(CURRENT_DIR)/$(HCS_DIR)),)
+        HCS_DIR := ../../../../../$(PRODUCT_PATH)/hdf_config
+    endif
+    ifeq ($(wildcard $(CURRENT_DIR)/$(HCS_DIR)),)
+        $(warning no hcs config found under $(PRODUCT_PATH)/hdf_config, skipping)
+        HCS_DIR :=
+    endif
+else
+    $(warning PRODUCT_PATH not set, skipping hcs config)
+    HCS_DIR :=
 endif
 
 ifeq ($(CONFIG_DRIVERS_HDF), y)
-ifeq ($(wildcard $(CURRENT_DIR)/$(HCS_DIR)),)
-HCS_ABS_DIR := $(abspath $(CURRENT_DIR)/$(HCS_DIR))
-$(error miss hcs config in $(HCS_ABS_DIR) for small system\
- or $(HCS_ABS_DIR)/khdf for standrad system)
-endif
-
+ifneq ($(HCS_DIR),)
 ifeq ($(CONFIG_DRIVERS_HDF_TEST), y)
 obj-$(CONFIG_DRIVERS_HDF_TEST) += test/
 obj-$(CONFIG_DRIVERS_HDF_TEST) += $(HCS_DIR)/hdf_test/
 else
 obj-$(CONFIG_DRIVERS_HDF) += $(HCS_DIR)/
+endif
 endif
 endif
 
