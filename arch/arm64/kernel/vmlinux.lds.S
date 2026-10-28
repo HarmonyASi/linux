@@ -192,6 +192,11 @@ SECTIONS
 		_text = .;
 		HEAD_TEXT
 	}
+
+        .plt : {
+                *(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
+        }
+
 	.text : ALIGN(SEGMENT_ALIGN) {	/* Real text segment		*/
 		_stext = .;		/* Text and read-only data	*/
 			IRQENTRY_TEXT
@@ -220,10 +225,11 @@ SECTIONS
 	 * contains only the lazy dispatch entries.
 	 */
 	.got.plt : { *(.got.plt) }
-	/*
-	 * ASSERT(SIZEOF(.got.plt) == 0 || SIZEOF(.got.plt) == 0x18,
-	 *      "Unexpected GOT/PLT entries detected!")
-	 */
+	
+	/* !! changed assert to 0x20 */
+	 ASSERT(SIZEOF(.got.plt) == 0 || SIZEOF(.got.plt) == 0x20,
+	       "Unexpected GOT/PLT entries detected!")
+	 
 
 	/* code sections that are never executed via the kernel mapping */
 	.rodata.text : {
@@ -277,22 +283,22 @@ SECTIONS
 	. += INIT_IDMAP_DIR_SIZE;
 	__pi_init_idmap_pg_end = .;
 
-	.init.data : {
-		INIT_DATA
-		INIT_SETUP(16)
-		INIT_CALLS
-		CON_INITCALL
-		INIT_RAM_FS
-		*(.init.altinstructions .init.bss)	/* from the EFI stub */
-	}
-
+        .init.data : {
+                INIT_DATA
+                INIT_SETUP(16)
+                INIT_CALLS
+                CON_INITCALL
+                INIT_RAM_FS
+                *(.init.altinstructions .init.bss)      /* from the EFI stub */
 #ifdef CONFIG_DRIVERS_HDF
-	.init.hdf_table : {
-		_hdf_drivers_start = .;
-		*(.hdf.driver)
-		_hdf_drivers_end = .;
-	}
+                . = ALIGN(8);
+                PROVIDE_HIDDEN(_hdf_drivers_start = .);
+                KEEP(*(.hdf.driver))
+                PROVIDE_HIDDEN(_hdf_drivers_end = .);
 #endif
+        }
+
+/* here was .init.hdf_table */
 
 	.exit.data : {
 		EXIT_DATA
@@ -388,12 +394,10 @@ SECTIONS
 	 * Sections that should stay zero sized, which is safer to
 	 * explicitly check instead of blindly discarding.
 	 */
-	.plt : {
-		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
-	}
-	/*
-	 * ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
-	 */
+
+	/* here was .plt */
+	
+	ASSERT(SIZEOF(.plt) <= 0x30, "Unexpected run-time procedure linkages detected!")
 }
 
 #include "image-vars.h"

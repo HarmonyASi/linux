@@ -13,26 +13,26 @@
 
 #define HDF_LOG_TAG driver_loader
 
+extern struct HdfDriverEntry *_hdf_drivers_start[];
+extern struct HdfDriverEntry *_hdf_drivers_end[];
+
 int32_t HdfDriverEntryConstruct(void)
 {
-    int i;
-    struct HdfDriverEntry *driverEntry = NULL;
-    size_t *addrBegin = NULL;
-    int32_t count = (int32_t)(((uint8_t *)(HDF_DRIVER_END()) - (uint8_t *)(HDF_DRIVER_BEGIN())) / sizeof(size_t));
-    if (count <= 0) {
-        HDF_LOGE("%{public}s: no hdf driver exist", __func__);
-        return HDF_FAILURE;
-    }
+    struct HdfDriverEntry **driverPtr = NULL;
+    int32_t count = 0;
 
-    addrBegin = (size_t *)(HDF_DRIVER_BEGIN());
-    for (i = 0; i < count; i++) {
-        driverEntry = (struct HdfDriverEntry *)(*addrBegin);
+    for (driverPtr = _hdf_drivers_start; driverPtr < _hdf_drivers_end; driverPtr++) {
+        struct HdfDriverEntry *driverEntry = *driverPtr;
         if (HdfRegisterDriverEntry(driverEntry) != HDF_SUCCESS) {
-            HDF_LOGE("failed to register driver %{public}s, skip and try another",
+            HDF_LOGE("failed to register driver %{public}s",
                 driverEntry ? driverEntry->moduleName : "");
             continue;
         }
-        addrBegin++;
+        count++;
+    }
+    if (count <= 0) {
+        HDF_LOGE("%{public}s: no hdf driver exist", __func__);
+        return HDF_FAILURE;
     }
     return HDF_SUCCESS;
 }
